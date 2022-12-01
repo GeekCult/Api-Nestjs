@@ -49,7 +49,7 @@ __decorate([
     __metadata("design:type", String)
 ], Parking.prototype, "date_end", void 0);
 Parking = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)('parking')
 ], Parking);
 exports.Parking = Parking;
 //# sourceMappingURL=parking.entity.js.map

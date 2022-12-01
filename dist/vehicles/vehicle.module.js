@@ -8,20 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VehicleModule = void 0;
 const common_1 = require("@nestjs/common");
-const database_module_1 = require("../database/database.module");
-const vehicle_providers_1 = require("./vehicle.providers");
+const vehicle_repository_1 = require("./vehicle.repository");
 const vehicle_service_1 = require("./vehicle.service");
 const vehicle_controller_1 = require("./vehicle.controller");
+const vehicle_entity_1 = require("./vehicle.entity");
+const typeorm_1 = require("@nestjs/typeorm");
 let VehicleModule = class VehicleModule {
 };
 VehicleModule = __decorate([
     (0, common_1.Module)({
-        imports: [database_module_1.DatabaseModule],
-        providers: [
-            ...vehicle_providers_1.VehicleProviders,
-            vehicle_service_1.VehicleService,
-        ],
-        controllers: [vehicle_controller_1.VehicleController]
+        imports: [typeorm_1.TypeOrmModule.forFeature([vehicle_entity_1.Vehicle])],
+        providers: [vehicle_service_1.VehicleService, vehicle_repository_1.VehicleRepository],
+        controllers: [vehicle_controller_1.VehicleController],
+        exports: [vehicle_service_1.VehicleService],
     })
 ], VehicleModule);
 exports.VehicleModule = VehicleModule;

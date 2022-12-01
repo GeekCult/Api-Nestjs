@@ -64,7 +64,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Company.prototype, "bikes", void 0);
 Company = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)('company')
 ], Company);
 exports.Company = Company;
 //# sourceMappingURL=company.entity.js.map

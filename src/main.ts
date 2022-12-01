@@ -2,7 +2,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-
 //import "reflect-metadata";
 
 async function bootstrap() {
@@ -17,8 +16,8 @@ async function bootstrap() {
     .addBearerAuth( { type: 'http', scheme: 'bearer', bearerFormat: 'JWT', name: 'JWT', description: 'Enter JWT token', in: 'header', }, 'JWT-auth',)
     .build();
     
-    //app.useGlobalPipes(new ValidationPipe());
-    //app.enableCors();
+    app.useGlobalPipes(new ValidationPipe());
+    app.enableCors();
     
     //const options: SwaggerDocumentOptions = {
         //deepScanRoutes: true

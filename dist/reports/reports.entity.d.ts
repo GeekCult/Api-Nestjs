@@ -1,4 +1,4 @@
-export declare abstract class Reports {
+export declare class Reports {
     id: number;
     id_company?: number;
     license_plate?: string;

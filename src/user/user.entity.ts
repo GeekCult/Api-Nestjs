@@ -9,11 +9,4 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ApiProperty()
-    @Column()
-    age?: number;
-    
-    @ApiProperty()
-    @Column({ type: "varchar", length: 100 })
-    mealPreference?: string;
 }

@@ -1,9 +1,18 @@
-import { Repository } from 'typeorm';
 import { Reports } from './reports.entity';
+import { ReportsRepository } from './reports.repository';
+import { Parking } from './parking.entity';
+export type ReportFilterQuery = {
+    filter: {
+        company_id: string;
+        period: boolean;
+    };
+};
 export declare class ReportsService {
     private reportsRepository;
-    constructor(reportsRepository: Repository<Reports>);
-    findAll(): Promise<Reports[]>;
+    constructor(reportsRepository: ReportsRepository<Reports>);
+    summary(query: ReportFilterQuery): Promise<Reports[]>;
+    summaryByPeriod(query: ReportFilterQuery): Promise<Reports[]>;
+    findAll(): Promise<Parking[]>;
     findOne(id?: number): Promise<Reports>;
-    summary(reports: Reports): Promise<(string | undefined)[]>;
+    summaryOld(reports: Reports): Promise<any[]>;
 }

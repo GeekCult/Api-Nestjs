@@ -2,7 +2,6 @@ import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ParseIntPipe } from '@nestjs/common/pipes/parse-int.pipe';
 import { UserAuth } from './auth.entity';
-import { UserEmailAuth } from './auth.email.entity';
 
 @Controller("auth")
 export class AuthController {

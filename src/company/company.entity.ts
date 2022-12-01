@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max, IsNotEmpty, ValidateIf, NotEquals} from "class-validator"
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity()
+@Entity('company')
 export class Company {
     @PrimaryGeneratedColumn()
     id: number;

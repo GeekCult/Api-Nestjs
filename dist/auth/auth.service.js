@@ -8,14 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
+const auth_repository_1 = require("./auth.repository");
 const jwt_1 = require("@nestjs/jwt");
-const typeorm_1 = require("typeorm");
 let AuthService = class AuthService {
     constructor(authRepository, jwtService) {
         this.authRepository = authRepository;
@@ -42,6 +39,7 @@ let AuthService = class AuthService {
         return this.authRepository.findOneBy({ email: email });
     }
     async findOneBy(email) {
+        return { name: "Pera", email: 'carai' };
         return this.authRepository.find({ select: { id: true, email: true }, where: { email: email } });
     }
     async findOneByEmail(email) {
@@ -58,8 +56,7 @@ let AuthService = class AuthService {
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)('USER_REPOSITORY')),
-    __metadata("design:paramtypes", [typeorm_1.Repository,
+    __metadata("design:paramtypes", [auth_repository_1.AuthRepository,
         jwt_1.JwtService])
 ], AuthService);
 exports.AuthService = AuthService;

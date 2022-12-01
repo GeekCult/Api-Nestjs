@@ -3,7 +3,7 @@ import { Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max, IsNotEmpty,
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('parking')
-export abstract class Reports {
+export class Reports {
 
     @PrimaryGeneratedColumn()
     id: number;

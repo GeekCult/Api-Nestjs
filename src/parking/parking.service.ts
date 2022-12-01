@@ -1,15 +1,14 @@
 // @ts-nocheck
-import { Injectable, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
+import { ParkingRepository } from './parking.repository';
 import { Parking } from './parking.entity';
 
 @Injectable()
 export class ParkingService {
 
     constructor(
-        @Inject('PARKING_REPOSITORY')
-            private parkingRepository: Repository<Parking>,
-        ) {}
+        private parkingRepository: ParkingRepository<Parking>,
+    ){}
 
     async findAll(): Promise<Parking[]> {
         return this.parkingRepository.find();
@@ -24,14 +23,43 @@ export class ParkingService {
         //return {name: "Pera", id: id}
         return this.parkingRepository.findOne({ license_plate: license_plate });
     }
+    
+    async createRecord(parking: Parking): Promise<Parking> {
 
-    async find(): Promise<string> {
-        return "Hello";
+
+
+        const user = await this.parkingRepository.manager.findAll(Parking, {
+    id: 1,
+})
+
+     
+        return user
+        //return recordset;
+        //return this.parkingRepository.save(parking);
+    }
+    
+    async save(id: number, parking: Parking){
+        const recordset = await this.parkingRepository.findOneBy({
+            id: id,
+        })
+        if(recordset){
+            recordset.license_plate = parking.license_plate
+            return await this.parkingRepository.save(recordset);
+        }else{
+            throw new UnauthorizedException('item park not found');
+        }
     }
 
-    async createRecord(parking: Parking){
-        //return parking;
-        return this.parkingRepository.save(parking);
+    async delete(id: number){
+        const recordset = await this.parkingRepository.findOneBy({
+            id: id,
+        })
+        if(recordset){
+            return await this.parkingRepository.delete(id);
+        }else{
+            throw new UnauthorizedException('item park not found');
+        }
+        
     }
 
 }

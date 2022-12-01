@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max, IsNotEmpty, ValidateIf, NotEquals} from "class-validator"
 
 
-@Entity()
+@Entity('parking')
 export class Parking {
 
     @PrimaryGeneratedColumn()

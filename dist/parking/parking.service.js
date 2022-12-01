@@ -8,13 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParkingService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("typeorm");
+const parking_repository_1 = require("./parking.repository");
+const parking_entity_1 = require("./parking.entity");
 let ParkingService = class ParkingService {
     constructor(parkingRepository) {
         this.parkingRepository = parkingRepository;
@@ -28,17 +26,39 @@ let ParkingService = class ParkingService {
     async searchLicensePlate(license_plate) {
         return this.parkingRepository.findOne({ license_plate: license_plate });
     }
-    async find() {
-        return "Hello";
-    }
     async createRecord(parking) {
-        return this.parkingRepository.save(parking);
+        const user = await this.parkingRepository.manager.findAll(parking_entity_1.Parking, {
+            id: 1,
+        });
+        return user;
+    }
+    async save(id, parking) {
+        const recordset = await this.parkingRepository.findOneBy({
+            id: id,
+        });
+        if (recordset) {
+            recordset.license_plate = parking.license_plate;
+            return await this.parkingRepository.save(recordset);
+        }
+        else {
+            throw new common_1.UnauthorizedException('item park not found');
+        }
+    }
+    async delete(id) {
+        const recordset = await this.parkingRepository.findOneBy({
+            id: id,
+        });
+        if (recordset) {
+            return await this.parkingRepository.delete(id);
+        }
+        else {
+            throw new common_1.UnauthorizedException('item park not found');
+        }
     }
 };
 ParkingService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)('PARKING_REPOSITORY')),
-    __metadata("design:paramtypes", [typeorm_1.Repository])
+    __metadata("design:paramtypes", [parking_repository_1.ParkingRepository])
 ], ParkingService);
 exports.ParkingService = ParkingService;
 //# sourceMappingURL=parking.service.js.map

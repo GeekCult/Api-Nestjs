@@ -1,8 +1,8 @@
-import { Repository } from 'typeorm';
+import { CompanyRepository } from './company.repository';
 import { Company } from './company.entity';
 export declare class CompanyService {
-    private companysRepository;
-    constructor(companysRepository: Repository<Company>);
+    private readonly companysRepository;
+    constructor(companysRepository: CompanyRepository);
     findAll(): Promise<Company[]>;
     findOne(id?: number): Promise<Company>;
     find(): Promise<string>;

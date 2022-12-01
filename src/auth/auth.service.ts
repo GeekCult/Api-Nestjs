@@ -1,19 +1,18 @@
 // @ts-nocheck
 import { Injectable, Inject, NotAcceptableException, UnauthorizedException,} from '@nestjs/common';
+import { AuthRepository } from './auth.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { AuthRepository } from './auth.repository';
 import { UserAuth } from './auth.entity';
 import { UserEmailAuth } from './auth.email.entity';
 
 @Injectable()
 export class AuthService {
     constructor(
-        //@InjectRepository(UserAuth) private authRepository: Repository<UserAuth>,  private jwtService: JwtService,
-        @Inject('USER_REPOSITORY')
-            private authRepository: Repository<UserAuth>, 
-            private jwtService: JwtService         
+        private readonly authRepository: AuthRepository, 
+        private jwtService: JwtService         
     ) {}
 
     async validateUser(auth: UserAuth): Promise<any> {
@@ -43,7 +42,7 @@ export class AuthService {
     }
 
     async findOneBy(email: string): Promise<UserEmailAuth> {
-        //return {name: "Pera", email: 'carai'}
+        return {name: "Pera", email: 'carai'}
         return this.authRepository.find({select: {id: true, email: true}, where: {email: email}});
     }
 

@@ -1,26 +1,43 @@
 // @ts-nocheck
 import { Injectable, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { Reports } from './reports.entity';
+import { ReportsRepository } from './reports.repository';
+import { Parking } from './parking.entity';
+
+export type ReportFilterQuery = {
+  filter: {
+    company_id: string;
+    period: boolean;
+    
+  };
+};
 
 @Injectable()
+
 export class ReportsService {
 
     constructor(
-        @Inject('PARKING_REPOSITORY')
-        private reportsRepository: Repository<Reports>,
+        private reportsRepository: ReportsRepository<Reports>,
     ){}
+    
+    async summary(query: ReportFilterQuery): Promise<Reports[]> {
+        return this.reportsRepository.summaryOfInputAndOutput(query);
+    }
 
-    async findAll(): Promise<Reports[]> {
-        return this.reportsRepository.find();
+    async summaryByPeriod(query: ReportFilterQuery): Promise<Reports[]> {
+        query.filter = {period: true }
+        return this.reportsRepository.summaryByPeriod(query);
+    }
+
+    async findAll(): Promise<Parking[]> {
+        return this.reportsRepository.findAll();
     }
 
     async findOne(id: number = 1): Promise<Reports> {
-        //return {name: "Pera", id: id}
         return this.reportsRepository.findOneBy({ id: id });
     }
 
-    async summary(reports: Reports){
+    async summaryOld(reports: Reports){
         
         var result: any = {Mes: 'Maio'};
         var result2 = [];
@@ -37,7 +54,7 @@ export class ReportsService {
                 //var it  +=  "d";
             }
             
-             for (let key in recordset) {
+            for (let key in recordset) {
                 //result.areia = 'Agosto';
                 let value = recordset[key].license_plate;
                 if(value != 'string') result2.push(value);

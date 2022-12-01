@@ -8,34 +8,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const company_module_1 = require("./company/company.module");
+const core_1 = require("@nestjs/core");
 const auth_module_1 = require("./auth/auth.module");
 const parking_module_1 = require("./parking/parking.module");
 const vehicle_module_1 = require("./vehicles/vehicle.module");
 const user_module_1 = require("./user/user.module");
 const reports_module_1 = require("./reports/reports.module");
+const database_1 = require("./common/config/database");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'mysql',
-                host: '34.95.237.156',
-                port: 3306,
-                username: 'root',
-                password: 'root',
-                database: process.env.MYSQL_DB,
-                entities: [],
-                synchronize: true,
-            }),
+            typeorm_1.TypeOrmModule.forRoot(database_1.databaseConfig),
             auth_module_1.AuthModule, company_module_1.CompanyModule, parking_module_1.ParkingModule, vehicle_module_1.VehicleModule, user_module_1.UserModule, reports_module_1.ReportsModule
         ],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService]
+        providers: [{ provide: core_1.APP_INTERCEPTOR, useClass: common_1.ClassSerializerInterceptor, }]
     })
 ], AppModule);
 exports.AppModule = AppModule;

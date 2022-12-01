@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReportsController = void 0;
 const common_1 = require("@nestjs/common");
-const reports_entity_1 = require("./reports.entity");
 const reports_service_1 = require("./reports.service");
 let ReportsController = class ReportsController {
     constructor(reportsService) {
@@ -23,11 +22,11 @@ let ReportsController = class ReportsController {
     findAll() {
         return this.reportsService.findAll();
     }
-    summary(reports) {
-        return this.reportsService.summary(reports);
+    summary(query) {
+        return this.reportsService.summary(query);
     }
-    createRecord(reports) {
-        return this.reportsService.summary(reports);
+    summaryByPeriod(query) {
+        return this.reportsService.summaryByPeriod(query);
     }
 };
 __decorate([
@@ -37,19 +36,19 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ReportsController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Post)('summary'),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.Get)('summary'),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [reports_entity_1.Reports]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
 ], ReportsController.prototype, "summary", null);
 __decorate([
-    (0, common_1.Post)('summary-by-hours'),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.Get)('summary-by-period'),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [reports_entity_1.Reports]),
-    __metadata("design:returntype", Promise)
-], ReportsController.prototype, "createRecord", null);
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], ReportsController.prototype, "summaryByPeriod", null);
 ReportsController = __decorate([
     (0, common_1.Controller)('reports'),
     __metadata("design:paramtypes", [reports_service_1.ReportsService])

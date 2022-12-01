@@ -14,10 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CompanyController = void 0;
 const common_1 = require("@nestjs/common");
-const swagger_1 = require("@nestjs/swagger");
-const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const parse_int_pipe_1 = require("@nestjs/common/pipes/parse-int.pipe");
-const company_entity_1 = require("./company.entity");
 const company_service_1 = require("./company.service");
 let CompanyController = class CompanyController {
     constructor(companysService) {
@@ -27,15 +24,9 @@ let CompanyController = class CompanyController {
         return this.companysService.findAll();
     }
     findOne(id) {
-        return this.companysService.findOne(id);
-    }
-    createRecord(company) {
-        return this.companysService.createRecord(company);
     }
 };
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -48,13 +39,6 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], CompanyController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [company_entity_1.Company]),
-    __metadata("design:returntype", Promise)
-], CompanyController.prototype, "createRecord", null);
 CompanyController = __decorate([
     (0, common_1.Controller)('company'),
     __metadata("design:paramtypes", [company_service_1.CompanyService])

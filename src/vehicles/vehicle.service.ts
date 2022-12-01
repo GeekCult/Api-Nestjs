@@ -1,14 +1,14 @@
 // @ts-nocheck
 import { Injectable, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { VehicleRepository } from './vehicle.repository';
 import { Vehicle } from './vehicle.entity';
 
 @Injectable()
 export class VehicleService {
 
     constructor(
-        @Inject('VEHICLE_REPOSITORY')
-            private vehicleRepository: Repository<Vehicle>,
+        
+            private vehicleRepository: VehicleRepository<Vehicle>,
         ) {}
 
     async findAll(): Promise<Vehicle[]> {

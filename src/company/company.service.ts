@@ -1,18 +1,19 @@
 // @ts-nocheck
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, InjectRepository } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { CompanyRepository } from './company.repository';
 import { Company } from './company.entity';
 
 @Injectable()
 export class CompanyService {
 
     constructor(
-        @Inject('COMPANY_REPOSITORY')
-            private companysRepository: Repository<Company>,
+        //@InjectRepository(Company)
+        private readonly companysRepository: CompanyRepository 
         ) {}
 
     async findAll(): Promise<Company[]> {
-        return this.companysRepository.find();
+        return this.companysRepository.findAll();
     }
 
     async findOne(id: number = 1): Promise<Company> {

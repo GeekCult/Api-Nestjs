@@ -1,11 +1,11 @@
+import { AuthRepository } from './auth.repository';
 import { JwtService } from '@nestjs/jwt';
-import { Repository } from 'typeorm';
 import { UserAuth } from './auth.entity';
 import { UserEmailAuth } from './auth.email.entity';
 export declare class AuthService {
-    private authRepository;
+    private readonly authRepository;
     private jwtService;
-    constructor(authRepository: Repository<UserAuth>, jwtService: JwtService);
+    constructor(authRepository: AuthRepository, jwtService: JwtService);
     validateUser(auth: UserAuth): Promise<any>;
     findAll(): Promise<UserAuth[]>;
     findOne(email?: number): Promise<UserEmailAuth>;

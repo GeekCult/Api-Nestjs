@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ParseIntPipe } from '@nestjs/common/pipes/parse-int.pipe';
 import { Reports } from './reports.entity';
@@ -14,15 +14,16 @@ export class ReportsController {
     findAll() {
         return this.reportsService.findAll();
     }
+
+    @Get('summary') 
+    summary(@Query() query: any){
+        return this.reportsService.summary(query);
+    }
     
-    @Post('summary') 
-    summary(@Body() reports: Reports): Promise<any> {
-        return this.reportsService.summary(reports);
+    @Get('summary-by-period') 
+    summaryByPeriod(@Query() query: any){
+        return this.reportsService.summaryByPeriod(query);
     }
 
-    @Post('summary-by-hours') 
-    createRecord(@Body() reports: Reports): Promise<any> {
-        return this.reportsService.summary(reports);
-    }
 
 }

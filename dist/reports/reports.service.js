@@ -8,24 +8,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReportsService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("typeorm");
+const reports_repository_1 = require("./reports.repository");
 let ReportsService = class ReportsService {
     constructor(reportsRepository) {
         this.reportsRepository = reportsRepository;
     }
+    async summary(query) {
+        return this.reportsRepository.summaryOfInputAndOutput(query);
+    }
+    async summaryByPeriod(query) {
+        query.filter = { period: true };
+        return this.reportsRepository.summaryByPeriod(query);
+    }
     async findAll() {
-        return this.reportsRepository.find();
+        return this.reportsRepository.findAll();
     }
     async findOne(id = 1) {
         return this.reportsRepository.findOneBy({ id: id });
     }
-    async summary(reports) {
+    async summaryOld(reports) {
         var result = { Mes: 'Maio' };
         var result2 = [];
         const recordset = await this.reportsRepository.find();
@@ -48,8 +52,7 @@ let ReportsService = class ReportsService {
 };
 ReportsService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)('PARKING_REPOSITORY')),
-    __metadata("design:paramtypes", [typeorm_1.Repository])
+    __metadata("design:paramtypes", [reports_repository_1.ReportsRepository])
 ], ReportsService);
 exports.ReportsService = ReportsService;
 //# sourceMappingURL=reports.service.js.map

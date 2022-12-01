@@ -12,8 +12,8 @@ export class CompanyController {
 
     constructor(private companysService: CompanyService) {}
 
-    @UseGuards(JwtAuthGuard)
-    @ApiBearerAuth('JWT-auth')
+    //@UseGuards(JwtAuthGuard)
+    //@ApiBearerAuth('JWT-auth')
     
     @Get()
     findAll() {
@@ -23,15 +23,15 @@ export class CompanyController {
 
     @Get(':id')
     findOne(@Param('id', ParseIntPipe) id : number) {
-        return this.companysService.findOne(id);
+        //return this.companysService.findOne(id);
     }
 
-    @Post() 
+    //@Post() 
     //@ApiOperation({ summary: 'Create cat' })
     //@ApiResponse({ status: 403, description: 'Forbidden.' })
-    createRecord(@Body() company: Company): Promise<Company> {
-        return this.companysService.createRecord(company);
-    }
+    //createRecord(@Body() company: Company): Promise<Company> {
+        //return this.companysService.createRecord(company);
+    //}
     /*
   @Get()
   findAll() {

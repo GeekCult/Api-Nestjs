@@ -14,6 +14,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParkingController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const parse_int_pipe_1 = require("@nestjs/common/pipes/parse-int.pipe");
 const parking_entity_1 = require("./parking.entity");
 const parking_service_1 = require("./parking.service");
@@ -21,17 +23,28 @@ let ParkingController = class ParkingController {
     constructor(parkingsService) {
         this.parkingsService = parkingsService;
     }
+    findAll() {
+        return this.parkingsService.findAll();
+    }
     remove(id) {
-        this.parkingsService.findOne(id);
+        return this.parkingsService.delete(id);
     }
     createRecord(parking) {
         return this.parkingsService.createRecord(parking);
     }
-    searchRecord(parking) {
-        return this.parkingsService.searchLicensePlate(parking.license_plate);
+    async edit(parking, id) {
+        return this.parkingsService.save(id, parking);
     }
 };
 __decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ParkingController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', parse_int_pipe_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -46,12 +59,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ParkingController.prototype, "createRecord", null);
 __decorate([
-    (0, common_1.Post)('search'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
+    (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [parking_entity_1.Parking]),
+    __metadata("design:paramtypes", [parking_entity_1.Parking, Number]),
     __metadata("design:returntype", Promise)
-], ParkingController.prototype, "searchRecord", null);
+], ParkingController.prototype, "edit", null);
 ParkingController = __decorate([
     (0, common_1.Controller)('parking'),
     __metadata("design:paramtypes", [parking_service_1.ParkingService])
