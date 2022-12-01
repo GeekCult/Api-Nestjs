@@ -5,13 +5,6 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-Resources
-Class-transformer
-class-transformer package that will allow us to transform plain object to an instance of class and vice versa
-
-Class-validator
-We’ll put some validation of model fields, so we’ll need to invoke the following npm command and install ‘class-validator’ library that will validate our model object, when user will try to insert new or edit an existing note object in database:
-
 ## Description
 
 API for checkin and checkout de vehicles.
@@ -40,13 +33,13 @@ $ npm run start:prod
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Find me on my web site or LinkedIn
 
 ## Stay in touch
 
-- Author - [CaArlos Garcia](https://kamilmysliwiec.com)
+- Author - [Carlos Garcia]
 - Website - [https://www.geekcult.com.br](https://www.geekcult.com.br)
-- Twitter - [@nestframework](https://twitter.com/geekcultoficial
+- Twitter - [@ngeekcultoficial](https://twitter.com/geekcultoficial)
 
 ## License
 
