@@ -48,7 +48,7 @@ http://localhost:3000/api
 
 ## Preview
 See how it looks like
-<img src="https://raw.githubusercontent.com/geekcult/nest-api/main/public/screen.png" alt="Parking" style="max-width: 100%;">
+<img src="https://www.geekcult.com.br/media/user/images/screen.png" alt="Parking" style="max-width: 100%;"/>
 
 ## Support
 
