@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParkingService = void 0;
 const common_1 = require("@nestjs/common");
 const parking_repository_1 = require("./parking.repository");
-const parking_entity_1 = require("./parking.entity");
 let ParkingService = class ParkingService {
     constructor(parkingRepository) {
         this.parkingRepository = parkingRepository;
@@ -27,10 +26,7 @@ let ParkingService = class ParkingService {
         return this.parkingRepository.findOne({ license_plate: license_plate });
     }
     async createRecord(parking) {
-        const user = await this.parkingRepository.manager.findAll(parking_entity_1.Parking, {
-            id: 1,
-        });
-        return user;
+        return this.parkingRepository.save(parking);
     }
     async save(id, parking) {
         const recordset = await this.parkingRepository.findOneBy({

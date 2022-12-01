@@ -7,7 +7,6 @@ export declare class ReportsRepository extends Repository<Reports> {
     summary(query: ReportFilterQuery): Promise<any>;
     summaryByPeriod(query: ReportFilterQuery): Promise<any>;
     findAll(): Promise<Reports[]>;
-    findAll3(): Promise<any>;
     prepareQuery(query: ReportFilterQuery): string;
-    prepareQuery2(id: number, year: string, month: string, day: string, hour: string): string;
+    prepareQuery2(id: number, field: string, date: string, hour: string): string;
 }

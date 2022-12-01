@@ -19,7 +19,7 @@ let UserRepository = class UserRepository extends typeorm_1.Repository {
         this.dataSource = dataSource;
     }
     async findAll() {
-        return this.find();
+        return this.find({ select: { id: true, firstName: true, lastName: true, email: true, password: false } });
     }
 };
 UserRepository = __decorate([

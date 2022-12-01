@@ -25,17 +25,7 @@ export class ParkingService {
     }
     
     async createRecord(parking: Parking): Promise<Parking> {
-
-
-
-        const user = await this.parkingRepository.manager.findAll(Parking, {
-    id: 1,
-})
-
-     
-        return user
-        //return recordset;
-        //return this.parkingRepository.save(parking);
+        return this.parkingRepository.save(parking);
     }
     
     async save(id: number, parking: Parking){

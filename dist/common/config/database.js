@@ -10,7 +10,7 @@ const user_entity_1 = require("../../user/user.entity");
 const reports_entity_1 = require("../../reports/reports.entity");
 dotenv.config();
 const defaultConfig = {
-    type: process.env.DB_DIALECT,
+    type: process.env.DB_TYPE,
     host: process.env.DB_HOST,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,

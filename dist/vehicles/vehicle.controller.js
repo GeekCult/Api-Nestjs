@@ -14,7 +14,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VehicleController = void 0;
 const common_1 = require("@nestjs/common");
-const parse_int_pipe_1 = require("@nestjs/common/pipes/parse-int.pipe");
+const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const vehicle_entity_1 = require("./vehicle.entity");
 const vehicle_service_1 = require("./vehicle.service");
 let VehicleController = class VehicleController {
@@ -24,28 +25,26 @@ let VehicleController = class VehicleController {
     findAll() {
         return this.vehiclesService.findAll();
     }
-    findOne(id) {
-        return this.vehiclesService.findOne(id);
-    }
     createRecord(vehicle) {
         return this.vehiclesService.createRecord(vehicle);
     }
 };
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Show all vehicles added' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], VehicleController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id', parse_int_pipe_1.ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], VehicleController.prototype, "findOne", null);
-__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Post)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Adds a new vehicle' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [vehicle_entity_1.Vehicle]),

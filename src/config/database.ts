@@ -2,18 +2,18 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
 
-import { Company } from '../../company/company.entity';
-import { UserAuth } from '../../auth/auth.entity';
-import { Parking } from '../../parking/parking.entity';
-import { User } from '../../user/user.entity';
-import { Vehicle } from '../../vehicles/vehicle.entity';
-import { Reports } from '../../reports/reports.entity';
+import { Company } from '../company/company.entity';
+import { UserAuth } from '../auth/auth.entity';
+import { Parking } from '../parking/parking.entity';
+import { User } from '../user/user.entity';
+import { Vehicle } from '../vehicles/vehicle.entity';
+import { Reports } from '../reports/reports.entity';
 
 
 dotenv.config();
 
 const defaultConfig: DataSourceOptions = {
-    type: process.env.DB_DIALECT as any,
+    type: process.env.DB_TYPE as any,
     host: process.env.DB_HOST,
     
     password: process.env.DB_PASSWORD,
@@ -34,7 +34,5 @@ const testConfig: DataSourceOptions = {
   synchronize: true,
 };
 
-export const databaseConfig =
-  process.env.NODE_ENV === 'test' ? testConfig : defaultConfig;
-
+export const databaseConfig = process.env.NODE_ENV === 'test' ? testConfig : defaultConfig;
 export const dataSource = new DataSource(databaseConfig);

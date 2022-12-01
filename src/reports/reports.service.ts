@@ -8,7 +8,7 @@ export type ReportFilterQuery = {
   filter: {
     company_id: string;
     period: boolean;
-    
+    group: boolean;
   };
 };
 
@@ -21,7 +21,8 @@ export class ReportsService {
     ){}
     
     async summary(query: ReportFilterQuery): Promise<Reports[]> {
-        return this.reportsRepository.summaryOfInputAndOutput(query);
+        query.filter = {group: true, period: false }
+        return this.reportsRepository.summary(query);
     }
 
     async summaryByPeriod(query: ReportFilterQuery): Promise<Reports[]> {

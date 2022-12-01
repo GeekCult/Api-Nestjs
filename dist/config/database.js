@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dataSource = exports.databaseConfig = void 0;
 const typeorm_1 = require("typeorm");
 const dotenv = require("dotenv");
-const company_entity_1 = require("../../company/company.entity");
-const auth_entity_1 = require("../../auth/auth.entity");
-const parking_entity_1 = require("../../parking/parking.entity");
-const user_entity_1 = require("../../user/user.entity");
-const reports_entity_1 = require("../../reports/reports.entity");
+const company_entity_1 = require("../company/company.entity");
+const auth_entity_1 = require("../auth/auth.entity");
+const parking_entity_1 = require("../parking/parking.entity");
+const user_entity_1 = require("../user/user.entity");
+const reports_entity_1 = require("../reports/reports.entity");
 dotenv.config();
 const defaultConfig = {
     type: process.env.DB_TYPE,

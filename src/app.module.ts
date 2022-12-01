@@ -15,26 +15,13 @@ import { VehicleModule } from './vehicles/vehicle.module';
 import { UserModule } from './user/user.module';
 import { ReportsModule } from './reports/reports.module';
 import { ConfigModule } from '@nestjs/config';
-import { databaseConfig } from './common/config/database';
+import { databaseConfig } from './config/database';
 
 @Module({
     imports: [
-        //ConfigModule.forRoot(),
-        TypeOrmModule.forRoot(databaseConfig),
-        /*
-        TypeOrmModule.forRoot({
-            type: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            username: 'root',
-            password: 'root',
-            database: 'drconsulta',
-            entities: [Company, UserAuth, Parking, Company],
-            synchronize: true,
-        }),*/
-        
+        TypeOrmModule.forRoot(databaseConfig),        
         AuthModule, CompanyModule, ParkingModule, VehicleModule, UserModule, ReportsModule
     ],
-    providers: [{provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor,}]
+    //providers: [{provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor,}]
 })
 export class AppModule {}

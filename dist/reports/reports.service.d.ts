@@ -5,6 +5,7 @@ export type ReportFilterQuery = {
     filter: {
         company_id: string;
         period: boolean;
+        group: boolean;
     };
 };
 export declare class ReportsService {

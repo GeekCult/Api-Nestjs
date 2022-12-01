@@ -17,7 +17,8 @@ let ReportsService = class ReportsService {
         this.reportsRepository = reportsRepository;
     }
     async summary(query) {
-        return this.reportsRepository.summaryOfInputAndOutput(query);
+        query.filter = { group: true, period: false };
+        return this.reportsRepository.summary(query);
     }
     async summaryByPeriod(query) {
         query.filter = { period: true };

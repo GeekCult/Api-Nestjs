@@ -14,13 +14,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReportsController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const reports_service_1 = require("./reports.service");
 let ReportsController = class ReportsController {
     constructor(reportsService) {
         this.reportsService = reportsService;
-    }
-    findAll() {
-        return this.reportsService.findAll();
     }
     summary(query) {
         return this.reportsService.summary(query);
@@ -30,20 +29,22 @@ let ReportsController = class ReportsController {
     }
 };
 __decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ReportsController.prototype, "findAll", null);
-__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Get)('summary'),
+    (0, swagger_1.ApiOperation)({ summary: 'Show summary of checkin and checkout vehicles by companies' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ReportsController.prototype, "summary", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, swagger_1.ApiBearerAuth)('JWT-auth'),
     (0, common_1.Get)('summary-by-period'),
+    (0, swagger_1.ApiOperation)({ summary: 'Show summary of checkin and checkout vehicles by period' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

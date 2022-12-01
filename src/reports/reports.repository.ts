@@ -44,17 +44,20 @@ export class ReportsRepository extends Repository<Reports> {
         if(recordset){
             for (let key in recordset) {
 
-                const date = recordset[key].date_init;
-                
-                const querySQL2 = this.prepareQuery2(recordset[key].id, date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getHours());
-//return querySQL2
-                const items = await this.query(querySQL2);
+                const date = recordset[key].date.split(" ");
+                const time = date[1].split(":")
+
+                const querySQL2 = this.prepareQuery2(recordset[key].id, 'date_start', date[0], time[0]);
+                const querySQL3 = this.prepareQuery2(recordset[key].id, 'date_end', date[0], time[0]);
+
+                const checkin = await this.query(querySQL2);
+                const checkout = await this.query(querySQL3);
 
                 //return items
                 //let value = result[key].license_plate;
                 //if(result[key].checkin != null) result[key].checkin = checkin + 1;
                 
-                result[key] = {date: recordset[key].date, name: recordset[key].name, checkin: items[0].total}
+                result[key] = {date: recordset[key].date, name: recordset[key].name, checkin: checkin[0].total, checkout: checkout[0].total}
             } 
         }
 
@@ -62,24 +65,15 @@ export class ReportsRepository extends Repository<Reports> {
     } 
 
     findAll() {
-        //var result: any = {Mes: 'Maio'};
-        //return result;
         return this.find();
-      }
-    async findAll3(): Promise<any> {
-        return this.find();
-        //var result: any = {Mes: 'Maio'};
-        ///return result;
-        //return this.find();
-      }
+    }
       
     prepareQuery(query: ReportFilterQuery) {
 
-        const where: any = [];
         const filter = query?.filter;
 
-        let select = `SELECT company.name AS name,  company.id AS id, ANY_VALUE(parking.date_start) as date_init`;
-        const from = `FROM parking LEFT JOIN company ON parking.id_company = company.id`;
+        let select = `SELECT company.name AS name, company.id AS id`;
+        let from = `FROM parking LEFT JOIN company ON parking.id_company = company.id`;
         let groupBy = 'GROUP BY company.id';
         
         if (filter?.period) {
@@ -87,18 +81,16 @@ export class ReportsRepository extends Repository<Reports> {
             groupBy += `, date`;
         }
 
-        select += `, (SELECT COUNT(*) FROM parking WHERE id_company = company.id AND date_start IS NOT NULL) AS checkin, (SELECT COUNT(*) FROM parking WHERE id_company = company.id AND date_end IS NOT NULL) AS checkout`;
+        if (filter?.period) { select += `, (SELECT COUNT(*) FROM parking WHERE id_company = company.id AND date_start IS NOT NULL) AS checkin, (SELECT COUNT(*) FROM parking WHERE id_company = company.id AND date_end IS NOT NULL) AS checkout`;}
 
-        const querySQL = `${select} ${from} ${
-          where.length > 0 ? `WHERE ${where.join(' AND ')}` : ''
-        } ${groupBy}`;
+        const querySQL = `${select} ${from} ${groupBy}`;
 
         return querySQL;
     }
 
-    prepareQuery2(id: number, year: string, month: string, day: string, hour: string) {
+    prepareQuery2(id: number, field: string, date: string, hour: string) {
 
-        const querySQL = `SELECT COUNT(*) as total FROM parking WHERE (id_company = ${id} AND date_start >= '${year}-${month}-${day} ${hour}:00:00' AND date_start <= '${year}-${month}-${day} ${hour}:59:59')`;
+        const querySQL = `SELECT COUNT(*) as total FROM parking WHERE (id_company = ${id} AND ${field} >= '${date} ${hour}:00:00' AND ${field} <= '${date} ${hour}:59:59')`;
 
         return querySQL;
     }

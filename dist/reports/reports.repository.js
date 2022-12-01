@@ -31,10 +31,13 @@ let ReportsRepository = class ReportsRepository extends typeorm_1.Repository {
         var result = {};
         if (recordset) {
             for (let key in recordset) {
-                const date = recordset[key].date_init;
-                const querySQL2 = this.prepareQuery2(recordset[key].id, date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getHours());
-                const items = await this.query(querySQL2);
-                result[key] = { date: recordset[key].date, name: recordset[key].name, checkin: items[0].total };
+                const date = recordset[key].date.split(" ");
+                const time = date[1].split(":");
+                const querySQL2 = this.prepareQuery2(recordset[key].id, 'date_start', date[0], time[0]);
+                const querySQL3 = this.prepareQuery2(recordset[key].id, 'date_end', date[0], time[0]);
+                const checkin = await this.query(querySQL2);
+                const checkout = await this.query(querySQL3);
+                result[key] = { date: recordset[key].date, name: recordset[key].name, checkin: checkin[0].total, checkout: checkout[0].total };
             }
         }
         return result;
@@ -42,25 +45,23 @@ let ReportsRepository = class ReportsRepository extends typeorm_1.Repository {
     findAll() {
         return this.find();
     }
-    async findAll3() {
-        return this.find();
-    }
     prepareQuery(query) {
-        const where = [];
         const filter = query === null || query === void 0 ? void 0 : query.filter;
-        let select = `SELECT company.name AS name,  company.id AS id, ANY_VALUE(parking.date_start) as date_init`;
-        const from = `FROM parking LEFT JOIN company ON parking.id_company = company.id`;
+        let select = `SELECT company.name AS name, company.id AS id`;
+        let from = `FROM parking LEFT JOIN company ON parking.id_company = company.id`;
         let groupBy = 'GROUP BY company.id';
         if (filter === null || filter === void 0 ? void 0 : filter.period) {
             select += `,CONCAT (DATE(parking.date_start), ' ', HOUR(parking.date_start), ':00') as date`;
             groupBy += `, date`;
         }
-        select += `, (SELECT COUNT(*) FROM parking WHERE id_company = company.id AND date_start IS NOT NULL) AS checkin, (SELECT COUNT(*) FROM parking WHERE id_company = company.id AND date_end IS NOT NULL) AS checkout`;
-        const querySQL = `${select} ${from} ${where.length > 0 ? `WHERE ${where.join(' AND ')}` : ''} ${groupBy}`;
+        if (filter === null || filter === void 0 ? void 0 : filter.period) {
+            select += `, (SELECT COUNT(*) FROM parking WHERE id_company = company.id AND date_start IS NOT NULL) AS checkin, (SELECT COUNT(*) FROM parking WHERE id_company = company.id AND date_end IS NOT NULL) AS checkout`;
+        }
+        const querySQL = `${select} ${from} ${groupBy}`;
         return querySQL;
     }
-    prepareQuery2(id, year, month, day, hour) {
-        const querySQL = `SELECT COUNT(*) as total FROM parking WHERE (id_company = ${id} AND date_start >= '${year}-${month}-${day} ${hour}:00:00' AND date_start <= '${year}-${month}-${day} ${hour}:59:59')`;
+    prepareQuery2(id, field, date, hour) {
+        const querySQL = `SELECT COUNT(*) as total FROM parking WHERE (id_company = ${id} AND ${field} >= '${date} ${hour}:00:00' AND ${field} <= '${date} ${hour}:59:59')`;
         return querySQL;
     }
 };

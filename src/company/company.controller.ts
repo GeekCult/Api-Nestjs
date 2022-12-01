@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-//import { LocalAuthGuard } from './auth/local-auth.guard';
 import { ParseIntPipe } from '@nestjs/common/pipes/parse-int.pipe';
 import { Company } from './company.entity';
 import { CompanyService } from './company.service';
@@ -12,31 +11,33 @@ export class CompanyController {
 
     constructor(private companysService: CompanyService) {}
 
-    //@UseGuards(JwtAuthGuard)
-    //@ApiBearerAuth('JWT-auth')
-    
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth('JWT-auth')
     @Get()
+    @ApiOperation({ summary: 'Show all companies saved' })
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
     findAll() {
-        //return JwtAuthGuard
         return this.companysService.findAll();
     }
-
+    
+    /*
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth('JWT-auth') 
     @Get(':id')
+    @ApiOperation({ summary: 'Get a specific company by id' })
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
     findOne(@Param('id', ParseIntPipe) id : number) {
         //return this.companysService.findOne(id);
+    } */
+    
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth('JWT-auth') 
+    @Post() 
+    @ApiOperation({ summary: 'Add a new company' })
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
+    createRecord(@Body() company: Company): Promise<Company> {
+        return this.companysService.createRecord(company);
     }
-
-    //@Post() 
-    //@ApiOperation({ summary: 'Create cat' })
-    //@ApiResponse({ status: 403, description: 'Forbidden.' })
-    //createRecord(@Body() company: Company): Promise<Company> {
-        //return this.companysService.createRecord(company);
-    //}
-    /*
-  @Get()
-  findAll() {
-    return this.notesService.getNotes();
-  }
 /*
   
 

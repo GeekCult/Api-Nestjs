@@ -17,7 +17,7 @@ let UserService = class UserService {
         this.userRepository = userRepository;
     }
     async findAll() {
-        return this.userRepository.find();
+        return this.userRepository.findAll();
     }
     async findOne(id = 1) {
         return this.userRepository.findOneBy({ id: id });
