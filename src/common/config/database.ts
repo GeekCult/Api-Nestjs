@@ -22,8 +22,9 @@ const defaultConfig: DataSourceOptions = {
     port: +(process.env.DB_PORT || 3306),
 
     charset: 'utf8mb4_unicode_ci',
-    entities: [Company, UserAuth, Parking, Company, Reports],
+    entities: [Company, User, UserAuth, Parking, Company, Reports],
     logging: true,
+    //synchronize: true,
 };
 
 const testConfig: DataSourceOptions = {

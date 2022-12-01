@@ -11,8 +11,8 @@ export class ParkingController {
 
     constructor(private parkingsService: ParkingService) {}
     
-    //@UseGuards(JwtAuthGuard)
-    //@ApiBearerAuth('JWT-auth')     
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth('JWT-auth')     
     @Get()
     findAll() {
         return this.parkingsService.findAll();

@@ -60,7 +60,7 @@ let ReportsRepository = class ReportsRepository extends typeorm_1.Repository {
         return querySQL;
     }
     prepareQuery2(id, year, month, day, hour) {
-        const querySQL = `SELECT COUNT(*) as total FROM parking WHERE (id_company = ${id} AND date_start >= '${year}-${month}-${day} ${hour}:00:00' AND date_start <= '${year}-${month}${day} ${hour}:59:59')`;
+        const querySQL = `SELECT COUNT(*) as total FROM parking WHERE (id_company = ${id} AND date_start >= '${year}-${month}-${day} ${hour}:00:00' AND date_start <= '${year}-${month}-${day} ${hour}:59:59')`;
         return querySQL;
     }
 };

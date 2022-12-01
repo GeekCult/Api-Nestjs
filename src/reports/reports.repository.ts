@@ -98,7 +98,7 @@ export class ReportsRepository extends Repository<Reports> {
 
     prepareQuery2(id: number, year: string, month: string, day: string, hour: string) {
 
-        const querySQL = `SELECT COUNT(*) as total FROM parking WHERE (id_company = ${id} AND date_start >= '${year}-${month}-${day} ${hour}:00:00' AND date_start <= '${year}-${month}${day} ${hour}:59:59')`;
+        const querySQL = `SELECT COUNT(*) as total FROM parking WHERE (id_company = ${id} AND date_start >= '${year}-${month}-${day} ${hour}:00:00' AND date_start <= '${year}-${month}-${day} ${hour}:59:59')`;
 
         return querySQL;
     }

@@ -4,6 +4,5 @@ export declare class UserController {
     private usersService;
     constructor(usersService: UserService);
     findAll(): Promise<User[]>;
-    findOne(id: number): Promise<User>;
     createRecord(user: User): Promise<User>;
 }

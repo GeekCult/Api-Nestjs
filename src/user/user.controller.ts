@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ParseIntPipe } from '@nestjs/common/pipes/parse-int.pipe';
 import { User } from './user.entity';
 import { Person } from './person.entity';
@@ -11,15 +12,20 @@ export class UserController {
 
     constructor(private usersService: UserService) {}
 
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth('JWT-auth') 
     @Get()
+    @ApiOperation({ summary: 'Shows all users' })
+    @ApiResponse({ status: 403, description: 'Forbidden.' })
     findAll() {
         return this.usersService.findAll();
     }
-
+    
+    /*
     @Get(':id')
     findOne(@Param('id', ParseIntPipe) id : number) {
         return this.usersService.findOne(id);
-    }
+    } */
     
     /*
     @Post('search') 
@@ -30,7 +36,7 @@ export class UserController {
     } */
 
     @Post() 
-    //@ApiOperation({ summary: 'Create cat' })
+    @ApiOperation({ summary: 'Create a new user' })
     //@ApiResponse({ status: 403, description: 'Forbidden.' })
     createRecord(@Body() user: User): Promise<User> {
         return this.usersService.createRecord(user);
