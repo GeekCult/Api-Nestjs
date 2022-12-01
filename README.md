@@ -48,7 +48,7 @@ http://localhost:3000/api
 
 ## Preview
 See how it looks like
-<img src="https://www.geekcult.com.br/media/user/images/screen.png" alt="Parking" style="max-width: 100%;"/>
+<img src="https://www.geekcult.com.br/media/user/images/original/screen.png" alt="Parking" style="max-width: 100%;"/>
 
 ## Support
 
