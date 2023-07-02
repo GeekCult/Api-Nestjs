@@ -6,7 +6,7 @@ import { Company } from '../company/company.entity';
 import { UserAuth } from '../auth/auth.entity';
 import { Parking } from '../parking/parking.entity';
 import { User } from '../user/user.entity';
-import { Vehicle } from '../vehicles/vehicle.entity';
+import { Upload } from '../upload/upload.entity';
 import { Reports } from '../reports/reports.entity';
 
 
@@ -22,7 +22,7 @@ const defaultConfig: DataSourceOptions = {
     port: +(process.env.DB_PORT || 3306),
 
     charset: 'utf8mb4_unicode_ci',
-    entities: [Company, User, UserAuth, Parking, Company, Reports],
+    entities: [Company, User, UserAuth, Parking, Upload, Company, Reports],
     logging: true,
     //synchronize: true,
 };
